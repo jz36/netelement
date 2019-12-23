@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=netelement
+      - POSTGRES_PASSWORD=netelement
+    volumes:
+      - ./dbpg:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
