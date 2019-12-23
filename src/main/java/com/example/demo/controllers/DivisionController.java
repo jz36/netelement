@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entity.Division;
+import com.example.demo.entity.Stuff;
 import com.example.demo.repositories.DivisionRepository;
+import com.example.demo.repositories.StuffRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +16,10 @@ import java.util.List;
 public class DivisionController {
 
     private DivisionRepository divisionRepository;
+    private StuffRepository stuffRepository;
 
     @RequestMapping("/test")
-    public Division test(){
-        return divisionRepository.findByDivisionId(1);
+    public Iterable<Stuff> test(){
+        return stuffRepository.findAll();
     }
 }

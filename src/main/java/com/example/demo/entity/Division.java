@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ import javax.persistence.Table;
 public class Division {
 
   @Id
+  @JsonIgnore
   @Column(name = "division_id")
   private Integer divisionId;
   @Column(name = "division_name")
