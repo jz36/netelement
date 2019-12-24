@@ -3,10 +3,9 @@ package com.example.demo.controllers;
 import com.example.demo.entity.Stuff;
 import com.example.demo.repositories.StuffRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -28,5 +27,15 @@ public class StuffController {
     public Iterable<Stuff> searchStuff(@RequestParam("fio") String fio){
         System.out.println(fio);
         return stuffRepository.findAllByFioLike(fio);
+    }
+
+
+    @DeleteMapping("/stuff")
+    public ResponseEntity<Object> removeStuff(@RequestParam Integer id){
+        if(stuffRepository.existsById(id)) {
+            stuffRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
