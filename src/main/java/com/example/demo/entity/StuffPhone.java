@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "stuff_phone", schema = "stuff_schema")
@@ -21,6 +20,7 @@ public class StuffPhone implements Serializable {
 
     @Id
     @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stuff_phone_id")
     private Integer stuffPhoneId;
 

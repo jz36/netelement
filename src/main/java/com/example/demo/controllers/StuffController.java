@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entity.Stuff;
+import com.example.demo.model.NewStuff;
 import com.example.demo.repositories.StuffRepository;
+import com.example.demo.service.StuffService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class StuffController {
 
     private StuffRepository stuffRepository;
+    private StuffService stuffService;
 
     @GetMapping("/stuff")
     public Iterable<Stuff> getAllStuff(){
@@ -29,6 +32,10 @@ public class StuffController {
         return stuffRepository.findAllByFioLike(fio);
     }
 
+    @PostMapping("/stuff")
+    public ResponseEntity<Stuff> addStuff(@RequestBody NewStuff stuff){
+        return stuffService.saveNewStuff(stuff);
+    }
 
     @DeleteMapping("/stuff")
     public ResponseEntity<Object> removeStuff(@RequestParam Integer id){
