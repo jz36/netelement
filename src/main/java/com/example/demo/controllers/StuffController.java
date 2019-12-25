@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entity.Stuff;
-import com.example.demo.model.NewStuff;
+import com.example.demo.model.StuffModel;
 import com.example.demo.repositories.StuffRepository;
 import com.example.demo.service.StuffService;
 import lombok.AllArgsConstructor;
@@ -28,13 +28,17 @@ public class StuffController {
 
     @GetMapping("/stuff/search")
     public Iterable<Stuff> searchStuff(@RequestParam("fio") String fio){
-        System.out.println(fio);
         return stuffRepository.findAllByFioLike(fio);
     }
 
     @PostMapping("/stuff")
-    public ResponseEntity<Stuff> addStuff(@RequestBody NewStuff stuff){
+    public ResponseEntity<Stuff> addStuff(@RequestBody StuffModel stuff){
         return stuffService.saveNewStuff(stuff);
+    }
+
+    @PutMapping("/stuff")
+    public ResponseEntity<Stuff> modifyStuff(@RequestBody StuffModel stuff){
+        return stuffService.modifyStuff(stuff);
     }
 
     @DeleteMapping("/stuff")

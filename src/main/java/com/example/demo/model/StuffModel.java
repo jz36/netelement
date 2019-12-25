@@ -10,8 +10,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewStuff {
+public class StuffModel {
 
+    private Integer id;
     private String fio;
     private Integer divisionId;
     private List<Phone> phones;
