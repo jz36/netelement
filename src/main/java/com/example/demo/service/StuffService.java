@@ -13,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +26,8 @@ public class StuffService {
     private final PhoneRepository phoneRepository;
     private final StuffPhoneRepository stuffPhoneRepository;
 
-    public ResponseEntity<Stuff> saveNewStuff(StuffModel stuffModel){
+    @Transactional
+    public ResponseEntity<Stuff> saveNewStuff(StuffModel stuffModel) {
         if (stuffModel.getId() != null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Вы пытаетесь изменить существующего пользователя");
 
@@ -32,6 +35,7 @@ public class StuffService {
 
     }
 
+    @Transactional
     public ResponseEntity<Stuff> modifyStuff(StuffModel stuffModel) {
         if (stuffModel.getId() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Не указан id сотрудника");
@@ -57,6 +61,19 @@ public class StuffService {
                 alreadyExist.add(phone);
         });
 
+
+        if (phonesToSave.stream().anyMatch(phone -> phone.getPhoneNumber() == null))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "У нового номера телефона не указан номер!");
+
+        List<Phone> existedNumbers = phoneRepository.findAllByPhoneNumberIn(phonesToSave
+                .stream()
+                .map(Phone::getPhoneNumber)
+                .collect(Collectors.toList())
+        );
+
+        if (existedNumbers.size() > 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Данные номера уже существуют в базе: " + existedNumbers.stream().map(Phone::getPhoneNumber).collect(Collectors.joining(",")));
+        }
         Iterable<Phone> savedPhones = phoneRepository.saveAll(phonesToSave);
         savedPhones.forEach(alreadyExist::add);
 
