@@ -66,6 +66,14 @@ public class StuffService {
         return new ResponseEntity<>(stuffs, HttpStatus.OK);
     }
 
+    public ResponseEntity<Stuff> getStuffById(Integer id){
+        Optional<Stuff> stuff = stuffRepository.findById(id);
+        if (stuff.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Сотрудника с идентификатором " + id + " не существует!");
+        return new ResponseEntity<>(stuff.get(), HttpStatus.OK);
+
+    }
+
     private ResponseEntity<Stuff> saveStuff(StuffModel stuffModel) {
         Stuff stuff = Stuff.builder()
                 .fio(stuffModel.getFio())

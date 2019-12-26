@@ -21,7 +21,6 @@ import javax.persistence.Table;
 public class Division {
 
   @Id
-  @JsonIgnore
   @Column(name = "division_id")
   private Integer divisionId;
   @Column(name = "division_name")

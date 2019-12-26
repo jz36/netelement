@@ -26,6 +26,11 @@ public class StuffController {
         return stuffService.searchStuffByDivision(divisionId);
     }
 
+    @GetMapping("/stuff/{id}")
+    public ResponseEntity<Stuff> getStuffById(@PathVariable Integer id){
+        return stuffService.getStuffById(id);
+    }
+
     @GetMapping("/stuff/search")
     public ResponseEntity<Iterable<Stuff>> searchStuff(@RequestParam("fio") String fio){
         return stuffService.searchStuff(fio);
