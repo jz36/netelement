@@ -103,6 +103,7 @@ public class StuffService {
 
         alreadyExist.forEach(existPhone -> savedStuffPhone.add(StuffPhone.builder().phoneId(existPhone.getPhoneId()).stuffId(savedStuff.getStuffId()).build()));
 
+        stuffPhoneRepository.removeAllByStuffId(savedStuff.getStuffId());
         stuffPhoneRepository.saveAll(savedStuffPhone);
 
         return new ResponseEntity<>(savedStuff, HttpStatus.OK);

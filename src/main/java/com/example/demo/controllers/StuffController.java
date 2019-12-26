@@ -22,8 +22,8 @@ public class StuffController {
     }
 
     @GetMapping("/stuff/division/{divisionId}")
-    public Iterable<Stuff> getStuffByDivision(@PathVariable Integer divisionId){
-        return stuffRepository.findAllByDivisionId(divisionId);
+    public ResponseEntity<Iterable<Stuff>> getStuffByDivision(@PathVariable Integer divisionId){
+        return stuffService.searchStuffByDivision(divisionId);
     }
 
     @GetMapping("/stuff/search")
