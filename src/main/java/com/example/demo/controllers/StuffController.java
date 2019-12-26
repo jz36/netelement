@@ -27,8 +27,8 @@ public class StuffController {
     }
 
     @GetMapping("/stuff/search")
-    public Iterable<Stuff> searchStuff(@RequestParam("fio") String fio){
-        return stuffRepository.findAllByFioLike(fio);
+    public ResponseEntity<Iterable<Stuff>> searchStuff(@RequestParam("fio") String fio){
+        return stuffService.searchStuff(fio);
     }
 
     @PostMapping("/stuff")

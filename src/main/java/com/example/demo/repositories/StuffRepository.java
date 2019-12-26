@@ -5,10 +5,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface StuffRepository extends CrudRepository<Stuff, Integer> {
 
-    Iterable<Stuff> findAllByDivisionId(Integer divisionId);
+    List<Stuff> findAllByDivisionId(Integer divisionId);
 
     @Query(value = "SELECT * from stuff_schema.stuff t where LOWER(t.stuff_name) like '%' || LOWER(:searched) ||'%'", nativeQuery = true)
-    Iterable<Stuff> findAllByFioLike(@Param("searched") String searched);
+    List<Stuff> findAllByFioLike(@Param("searched") String searched);
 }
